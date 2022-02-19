@@ -1,39 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import TodoList from './TodoList';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
-const todos = [
-  {
-    id: 1,
-    value: 'Work',
-    date: new Date().toDateString(),
-    complete: false
-  },
-  {
-    id: 2,
-    value: 'Node',
-    date: new Date().toDateString(),
-    complete: false
-  },
-  {
-    id: 3,
-    value: 'Masters degree',
-    date: new Date().toDateString(),
-    complete: false
-  },
-  {
-    id: 4,
-    value: 'Homework',
-    date: new Date().toDateString(),
-    complete: false
-  }
-];
+
 
 function App() {
   const [todo, setTodo] = useState('');
   const [myTodos, setMyTodos] = useState(todos);
+  useEffect(() => {
+    fetch('http://localhost:3005/todo',{
+      method:'GET'
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      setMyTodos(data);
+    })
+  }, []);
   console.log(myTodos);
   console.log(todo);
   return (
